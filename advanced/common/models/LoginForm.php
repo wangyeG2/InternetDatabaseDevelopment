@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace common\models;
 
 use Yii;
-use yii\base\Model;
 
 /**
  * Login form
  */
-class LoginForm extends Model
+class LoginForm extends RequestForm
 {
     public string $username = '';
     public string $password = '';

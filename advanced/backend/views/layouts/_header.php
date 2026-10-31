@@ -9,6 +9,7 @@ use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
 $items = [
+    ['label' => '新闻管理', 'url' => ['/news/index'], 'visible' => Yii::$app->user->identity?->isAdmin() ?? false],
     [
         'label' => 'Home',
         'url' => ['/site/index'],

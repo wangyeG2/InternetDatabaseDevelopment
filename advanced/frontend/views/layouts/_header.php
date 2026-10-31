@@ -9,6 +9,8 @@ use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
 $items = [
+    ['label' => '新闻公告', 'url' => ['/news/index']],
+    ['label' => '作业下载', 'url' => ['/download/index']],
     [
         'label' => 'Home',
         'url' => ['/site/index'],

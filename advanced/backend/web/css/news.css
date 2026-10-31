@@ -1,0 +1,9 @@
+/* Management news module; preserve the team's shared layout and controls. */
+.news-admin { max-width: 1100px; margin: 1.5rem auto 4rem; }
+.news-admin h1 { font-size: 2rem; margin-bottom: 1.4rem; overflow-wrap: anywhere; }
+.news-admin-heading { display: flex; justify-content: space-between; align-items: start; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.news-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.5rem 0; }
+.news-admin-summary { border-left: 3px solid #21704b; padding-left: 1rem; line-height: 1.9; }
+.news-admin-body { line-height: 1.9; overflow-wrap: anywhere; }
+.news-revision { padding: 1rem 0; border-top: 1px solid var(--bs-border-color); }
+.news-admin .table td { overflow-wrap: anywhere; }

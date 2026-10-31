@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace frontend\models;
 
 use common\models\User;
-use yii\base\Model;
+use common\models\RequestForm;
 use yii\mail\MailerInterface;
 
 /**
  * Password reset request form
  */
-class PasswordResetRequestForm extends Model
+class PasswordResetRequestForm extends RequestForm
 {
     public string $email = '';
     /**

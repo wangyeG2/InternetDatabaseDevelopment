@@ -1,0 +1,23 @@
+/* Public news module; all selectors are scoped to B's pages. */
+.news-page { max-width: 960px; margin: 0 auto 4rem; color: var(--bs-body-color); }
+.news-heading { padding: 2rem 0 1.5rem; border-bottom: 3px solid #21704b; }
+.news-heading h1, .news-detail h1 { font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
+.news-eyebrow { color: #21704b; font-size: .78rem; font-weight: 700; letter-spacing: .12em; margin-bottom: .75rem; }
+.news-heading > p:last-child { margin-bottom: 0; color: var(--bs-secondary-color); }
+.news-filters { padding: 1.5rem 0; border-bottom: 1px solid var(--bs-border-color); }
+.news-count { font-size: .85rem; color: var(--bs-secondary-color); margin: 1.5rem 0 .5rem; }
+.news-item { padding: 1.5rem 0; border-bottom: 1px solid var(--bs-border-color); }
+.news-item-meta { display: flex; flex-wrap: wrap; gap: .8rem; color: var(--bs-secondary-color); font-size: .86rem; margin-bottom: .65rem; }
+.news-item h2 { font-size: 1.5rem; line-height: 1.45; overflow-wrap: anywhere; }
+.news-item h2 a { color: inherit; text-decoration: none; }
+.news-item h2 a:hover { color: #21704b; text-decoration: underline; }
+.news-pin { color: #21704b; font-weight: 700; }
+.news-summary { color: var(--bs-secondary-color); line-height: 1.8; margin-bottom: .6rem; overflow-wrap: anywhere; }
+.news-tags { display: flex; flex-wrap: wrap; gap: .8rem; }
+.news-tags a { color: #21704b; font-size: .88rem; text-decoration: none; }
+.news-empty { padding: 3rem 0; color: var(--bs-secondary-color); text-align: center; }
+.news-detail { padding-top: 1.5rem; max-width: 800px; }
+.news-detail-summary { border-left: 3px solid #21704b; padding: .4rem 0 .4rem 1rem; line-height: 1.9; color: var(--bs-secondary-color); }
+.news-body { padding: 1.5rem 0; font-size: 1.06rem; line-height: 2; overflow-wrap: anywhere; }
+[data-bs-theme="dark"] .news-eyebrow, [data-bs-theme="dark"] .news-tags a, [data-bs-theme="dark"] .news-pin { color: #8ad4ab; }
+@media (max-width: 576px) { .news-heading { padding-top: 1rem; } .news-item h2 { font-size: 1.3rem; } .news-body { font-size: 1rem; } }

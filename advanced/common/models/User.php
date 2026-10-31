@@ -21,6 +21,7 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property int $status
+ * @property string $role
  * @property int $created_at
  * @property int $updated_at
  * @property string $password write-only password
@@ -30,6 +31,8 @@ class User extends ActiveRecord implements IdentityInterface
     public const STATUS_DELETED = 0;
     public const STATUS_INACTIVE = 9;
     public const STATUS_ACTIVE = 10;
+    public const ROLE_MEMBER = 'member';
+    public const ROLE_ADMIN = 'admin';
     /**
      * {@inheritdoc}
      */
@@ -56,6 +59,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['role', 'default', 'value' => self::ROLE_MEMBER],
+            ['role', 'in', 'range' => [self::ROLE_MEMBER, self::ROLE_ADMIN]],
         ];
     }
 
@@ -145,6 +150,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function getId(): int
     {
         return $this->getPrimaryKey();
+    }
+
+    /** Whether this active identity may access the management application. */
+    public function isAdmin(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE && $this->role === self::ROLE_ADMIN;
     }
 
     /**

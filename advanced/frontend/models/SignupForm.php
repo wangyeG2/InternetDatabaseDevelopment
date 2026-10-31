@@ -6,13 +6,13 @@ namespace frontend\models;
 
 use common\models\User;
 use Yii;
-use yii\base\Model;
+use common\models\RequestForm;
 use yii\mail\MailerInterface;
 
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupForm extends RequestForm
 {
     public string $username = '';
     public string $email = '';
