@@ -1,6 +1,7 @@
 <?php
 
 /** Management detail and revision history. Variables: news, history. Maintainer: B. */
+
 declare(strict_types=1);
 
 use backend\assets\NewsAsset;
@@ -8,6 +9,10 @@ use common\models\News;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\widgets\ListView;
+
+/** @var yii\web\View $this */
+/** @var common\models\News $news */
+/** @var yii\data\ActiveDataProvider $history */
 
 NewsAsset::register($this);
 $this->title = $news->title;
@@ -29,8 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-outline-secondary']) ?>
         </div>
     <?php endif; ?>
-    <?php if ($news->category->is_active == 0): ?><p class="alert alert-warning">该分类已停用，所属新闻不会在前台展示。</p><?php endif; ?>
-    <?php if ($news->summary !== ''): ?><p class="news-admin-summary"><?= Html::encode($news->summary) ?></p><?php endif; ?>
+    <?php if ($news->category->is_active == 0):
+        ?><p class="alert alert-warning">该分类已停用，所属新闻不会在前台展示。</p><?php
+    endif; ?>
+    <?php if ($news->summary !== ''):
+        ?><p class="news-admin-summary"><?= Html::encode($news->summary) ?></p><?php
+    endif; ?>
     <div class="news-admin-body"><?= nl2br(Html::encode($news->content)) ?></div>
     <p class="mt-3">标签：<?= Html::encode(implode('、', $news->getTagNames())) ?: '无' ?></p>
     <h2 class="h4 mt-5">修改记录</h2>

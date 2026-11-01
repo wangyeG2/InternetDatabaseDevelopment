@@ -1,10 +1,14 @@
 <?php
 
 /** Public detail view. Variable: news (News). Maintainer: B. */
+
 declare(strict_types=1);
 
 use frontend\assets\NewsAsset;
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var common\models\News $news */
 
 NewsAsset::register($this);
 $this->title = $news->title;
@@ -18,7 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <span><?= Html::encode($news->author->username) ?></span>
         <time datetime="<?= date('c', (int) $news->published_at) ?>"><?= Yii::$app->formatter->asDatetime($news->published_at, 'php:Y-m-d H:i') ?></time>
     </p>
-    <?php if ($news->summary !== ''): ?><p class="news-detail-summary"><?= Html::encode($news->summary) ?></p><?php endif; ?>
+    <?php if ($news->summary !== ''):
+        ?><p class="news-detail-summary"><?= Html::encode($news->summary) ?></p><?php
+    endif; ?>
     <div class="news-body"><?= nl2br(Html::encode($news->content)) ?></div>
     <div class="news-tags mt-4">
         <?php foreach ($news->tags as $tag): ?>

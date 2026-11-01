@@ -1,5 +1,7 @@
 <?php
 
+/** Shared account identity and explicit administrator role. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace common\models;

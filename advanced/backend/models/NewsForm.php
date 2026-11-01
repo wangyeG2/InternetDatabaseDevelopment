@@ -1,6 +1,7 @@
 <?php
 
 /** Explicit news editor input contract; author and timestamps are server-owned. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\models;
@@ -60,7 +61,8 @@ class NewsForm extends RequestForm
     {
         $values = preg_split('/[,，]/u', $this->tags) ?: [];
         return array_values(array_unique(array_filter(array_map(
-            static fn (string $value): string => mb_strtolower(trim($value), 'UTF-8'), $values,
+            static fn (string $value): string => mb_strtolower(trim($value), 'UTF-8'),
+            $values,
         ), static fn (string $value): bool => $value !== '')));
     }
 

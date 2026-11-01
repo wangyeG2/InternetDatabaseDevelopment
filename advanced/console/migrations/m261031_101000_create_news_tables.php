@@ -1,6 +1,7 @@
 <?php
 
 /** News categories, posts, tags and edit history. Maintainer: B. */
+
 declare(strict_types=1);
 
 use yii\db\Migration;

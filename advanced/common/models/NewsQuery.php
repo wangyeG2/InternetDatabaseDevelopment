@@ -1,6 +1,7 @@
 <?php
 
 /** Shared public visibility rule; used by list and detail routes. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;

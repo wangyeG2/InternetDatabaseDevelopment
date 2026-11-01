@@ -1,5 +1,7 @@
 <?php
 
+/** Verification-email request with safe scalar input. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace frontend\models;

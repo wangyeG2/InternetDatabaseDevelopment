@@ -1,10 +1,15 @@
 <?php
 
 /** Create news page. Variables: model, categories. Maintainer: B. */
+
 declare(strict_types=1);
 
 use backend\assets\NewsAsset;
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var backend\models\NewsForm $model */
+/** @var array<int, string> $categories */
 
 NewsAsset::register($this);
 $this->title = '新建新闻';

@@ -1,6 +1,7 @@
 <?php
 
 /** Admin/member route boundaries and news editor integration. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\tests\Functional;
@@ -45,7 +46,7 @@ final class NewsCest
             'NewsForm[category_id]' => '1', 'NewsForm[status]' => '0', 'NewsForm[is_pinned]' => '1', 'NewsForm[tags]' => '课程,团队']);
         $I->see('集成测试公告', 'h1');
         $I->see('草稿');
-        $news = News::find()->where(['title' => '集成测试公告'])->one();
+        $news = News::findOne(['title' => '集成测试公告']);
         $I->amOnRoute('news/update', ['id' => $news->id]);
         $I->submitForm('#news-form', ['NewsForm[title]' => '已经发布的集成公告', 'NewsForm[status]' => '10']);
         $I->see('已经发布的集成公告', 'h1');
@@ -60,6 +61,41 @@ final class NewsCest
             $I->seeResponseCodeIs(405);
         }
         $I->seeRecord(News::class, ['id' => 1, 'status' => 10, 'deleted_at' => null]);
+    }
+
+    public function adminStateChangesUpdatePublicVisibilityAndRetainHistory(FunctionalTester $I): void
+    {
+        $I->amLoggedInAs(1);
+        foreach ([['publish', 10], ['withdraw', 0], ['publish', 10]] as [$action, $status]) {
+            $I->amOnRoute('news/view', ['id' => 2]);
+            $I->sendAjaxPostRequest(
+                \yii\helpers\Url::to(['/news/' . $action, 'id' => 2]),
+                [\Yii::$app->request->csrfParam => $I->grabAttributeFrom('meta[name="csrf-token"]', 'content')]
+            );
+            $I->seeRecord(News::class, ['id' => 2, 'status' => $status]);
+            $I->assertSame($status === 10, News::find()->publiclyVisible()->andWhere(['n.id' => 2])->exists());
+        }
+        $I->amOnRoute('news/view', ['id' => 2]);
+        $I->sendAjaxPostRequest(
+            \yii\helpers\Url::to(['/news/delete', 'id' => 2]),
+            [\Yii::$app->request->csrfParam => $I->grabAttributeFrom('meta[name="csrf-token"]', 'content')]
+        );
+        $I->assertNotNull(News::findOne(2)->deleted_at);
+        $I->assertFalse(News::find()->publiclyVisible()->andWhere(['n.id' => 2])->exists());
+        $I->assertSame(4, (int) \common\models\NewsRevision::find()->where(['news_id' => 2])->count());
+        $I->amOnRoute('news/view', ['id' => 2]);
+        $I->see('修改记录');
+        $I->amOnRoute('news/update', ['id' => 2]);
+        $I->seeResponseCodeIs(404);
+    }
+
+    public function stateChangesWithoutCsrfAreRejected(FunctionalTester $I): void
+    {
+        $I->amLoggedInAs(1);
+        $I->amOnRoute('news/view', ['id' => 2]);
+        $I->sendAjaxPostRequest(\yii\helpers\Url::to(['/news/publish', 'id' => 2]));
+        $I->seeResponseCodeIs(400);
+        $I->seeRecord(News::class, ['id' => 2, 'status' => 0]);
     }
 
     public function categoryCanBeCreatedAndDisabled(FunctionalTester $I): void

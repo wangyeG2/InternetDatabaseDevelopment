@@ -1,0 +1,2 @@
+# Keep PHP source compatible with the repository's Yii / PSR-12 checks on Windows.
+*.php text eol=lf

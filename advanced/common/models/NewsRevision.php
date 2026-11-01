@@ -1,6 +1,7 @@
 <?php
 
 /** Immutable news edit and publication history. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;
@@ -8,6 +9,16 @@ namespace common\models;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
+/**
+ * @property int $id
+ * @property int $news_id
+ * @property int $editor_id
+ * @property string $operation
+ * @property string $snapshot
+ * @property int $created_at
+ * @property User $editor
+ * @property string $operationLabel
+ */
 class NewsRevision extends ActiveRecord
 {
     public static function tableName(): string

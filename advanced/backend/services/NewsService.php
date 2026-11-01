@@ -1,6 +1,7 @@
 <?php
 
 /** Transactional news editing, tag synchronization and history. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\services;

@@ -1,6 +1,7 @@
 <?php
 
 /** Parameterized, paginated news search for public and management lists. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;

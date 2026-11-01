@@ -1,11 +1,15 @@
 <?php
 
 /** Category creation/editing view. Variable: model (NewsCategoryForm). Maintainer: B. */
+
 declare(strict_types=1);
 
 use backend\assets\NewsAsset;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var backend\models\NewsCategoryForm $model */
 
 NewsAsset::register($this);
 $this->title = $model->record === null ? '新建分类' : '编辑分类';

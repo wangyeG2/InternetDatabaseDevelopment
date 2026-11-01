@@ -1,6 +1,7 @@
 <?php
 
 /** Public browsing, visibility, search and stored-text escaping tests. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace frontend\tests\Functional;
@@ -58,5 +59,29 @@ final class NewsCest
         $I->submitForm('#login-form', ['LoginForm[username]' => ['unexpected-array'], 'LoginForm[password]' => 'test']);
         $I->seeResponseCodeIs(200);
         $I->see('must be a single value.');
+    }
+
+    public function paginationKeepsFiltersAndPinnedOrdering(FunctionalTester $I): void
+    {
+        $source = News::findOne(1)->attributes;
+        unset($source['id']);
+        for ($number = 1; $number <= 14; $number++) {
+            $row = $source;
+            $row['title'] = sprintf('分页新闻%02d', $number);
+            $row['slug'] = 'pagination-' . $number;
+            $row['is_pinned'] = $number === 1 ? 1 : 0;
+            \Yii::$app->db->createCommand()->insert('{{%news}}', $row)->execute();
+        }
+        $I->amOnRoute('news/index', ['q' => '分页新闻', 'category' => '1']);
+        $I->see('共 14 篇');
+        $I->see('分页新闻01');
+        $I->see('分页新闻14');
+        $I->dontSee('分页新闻02');
+        $I->click('2', '.pagination');
+        $I->see('分页新闻02');
+        $I->dontSee('分页新闻14');
+        $I->seeInCurrentUrl('q=');
+        $I->seeInCurrentUrl('category=1');
+        $I->assertCount(2, $I->grabMultiple('.news-item'));
     }
 }

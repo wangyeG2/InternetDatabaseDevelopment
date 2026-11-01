@@ -1,6 +1,7 @@
 <?php
 
 /** Styles scoped to the public news pages. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace frontend\assets;

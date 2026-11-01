@@ -1,6 +1,7 @@
 <?php
 
 /** Opt-in, repeatable sample content for the news flow. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace console\controllers;

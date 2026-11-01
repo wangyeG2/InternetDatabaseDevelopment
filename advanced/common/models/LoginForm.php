@@ -1,5 +1,7 @@
 <?php
 
+/** Shared login validation with typed-request protection. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace common\models;

@@ -1,5 +1,7 @@
 <?php
 
+/** Test-only administrator fixture for backend login. Maintainer: B. */
+
 return [
     [
         'username' => 'erau',

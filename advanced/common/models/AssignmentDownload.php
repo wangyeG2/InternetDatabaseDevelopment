@@ -1,6 +1,7 @@
 <?php
 
 /** Only ZIP files explicitly placed in the coursework download directories are public. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;
@@ -25,8 +26,10 @@ class AssignmentDownload
         $items = [];
         foreach (glob($directory . '/*.zip') ?: [] as $candidate) {
             $path = realpath($candidate);
-            if ($path === false || !is_file($path) || is_link($candidate)
-                || strcasecmp(dirname($path), $root) !== 0) {
+            if (
+                $path === false || !is_file($path) || is_link($candidate)
+                || strcasecmp(dirname($path), $root) !== 0
+            ) {
                 continue;
             }
             $name = basename($path);

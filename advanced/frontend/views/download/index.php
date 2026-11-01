@@ -1,9 +1,13 @@
 <?php
 
 /** Team and personal coursework downloads. Variable: groups. Maintainer: B. */
+
 declare(strict_types=1);
 
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var array $groups */
 
 $this->title = '作业下载';
 $this->params['breadcrumbs'][] = $this->title;

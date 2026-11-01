@@ -1,6 +1,7 @@
 <?php
 
 /** Category editor form with safe request assignment. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\models;

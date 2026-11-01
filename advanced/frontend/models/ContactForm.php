@@ -1,5 +1,7 @@
 <?php
 
+/** Contact form with safe scalar request fields. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace frontend\models;

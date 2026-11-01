@@ -1,6 +1,7 @@
 <?php
 
 /** Public news list and detail routes. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace frontend\controllers;
@@ -27,7 +28,7 @@ class NewsController extends Controller
     public function actionView(int $id): string
     {
         $news = News::find()->publiclyVisible()->with(['category', 'author', 'tags'])->andWhere(['n.id' => $id])->one();
-        if ($news === null) {
+        if (!$news instanceof News) {
             throw new NotFoundHttpException('这篇新闻不存在或尚未发布。');
         }
         return $this->render('view', ['news' => $news]);

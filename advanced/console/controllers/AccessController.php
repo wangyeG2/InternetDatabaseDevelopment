@@ -1,6 +1,7 @@
 <?php
 
 /** Explicit local provisioning for the first administrator. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace console\controllers;

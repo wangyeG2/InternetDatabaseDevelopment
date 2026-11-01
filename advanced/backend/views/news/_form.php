@@ -1,11 +1,16 @@
 <?php
 
 /** News editor view. Variables: model (NewsForm), categories. Maintainer: B. */
+
 declare(strict_types=1);
 
 use common\models\News;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var backend\models\NewsForm $model */
+/** @var array<int, string> $categories */
 
 $form = ActiveForm::begin(['id' => 'news-form']);
 ?>

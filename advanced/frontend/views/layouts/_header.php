@@ -1,5 +1,7 @@
 <?php
 
+/** Shared frontend navigation with news and coursework links. Maintainers: C/B. */
+
 declare(strict_types=1);
 
 /** @var yii\web\View $this */

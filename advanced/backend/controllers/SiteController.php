@@ -1,5 +1,7 @@
 <?php
 
+/** Backend entry and authentication routes. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace backend\controllers;

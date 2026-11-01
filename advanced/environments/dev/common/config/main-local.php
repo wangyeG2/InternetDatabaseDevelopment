@@ -1,5 +1,7 @@
 <?php
 
+/** Public development connection template; configure credentials locally. Maintainers: A/B. */
+
 return [
     'container' => [
         'singletons' => [

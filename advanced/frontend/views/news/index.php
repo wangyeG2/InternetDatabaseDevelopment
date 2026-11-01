@@ -1,12 +1,18 @@
 <?php
 
 /** Public list view. Variables: search, dataProvider, categories. Maintainer: B. */
+
 declare(strict_types=1);
 
 use frontend\assets\NewsAsset;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\ListView;
+
+/** @var yii\web\View $this */
+/** @var common\models\NewsSearch $search */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var array<int, string> $categories */
 
 NewsAsset::register($this);
 $this->title = '新闻公告';

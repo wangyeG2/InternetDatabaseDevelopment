@@ -1,6 +1,7 @@
 <?php
 
 /** Management news routes; protected by the application admin guard. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\controllers;
@@ -15,6 +16,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -96,7 +98,7 @@ class NewsController extends Controller
             $query->andWhere(['n.deleted_at' => null]);
         }
         $news = $query->one();
-        if ($news === null) {
+        if (!$news instanceof News) {
             throw new NotFoundHttpException('新闻不存在。');
         }
         return $news;
@@ -104,6 +106,10 @@ class NewsController extends Controller
 
     private function editor(): User
     {
-        return Yii::$app->user->identity;
+        $identity = Yii::$app->user->identity;
+        if (!$identity instanceof User) {
+            throw new ForbiddenHttpException('管理员身份无效。');
+        }
+        return $identity;
     }
 }

@@ -1,5 +1,5 @@
 /* Public news module; all selectors are scoped to B's pages. */
-.news-page { max-width: 960px; margin: 0 auto 4rem; color: var(--bs-body-color); }
+.news-page { width: 100%; min-width: 0; max-width: 960px; margin: 0 auto 4rem; color: var(--bs-body-color); }
 .news-heading { padding: 2rem 0 1.5rem; border-bottom: 3px solid #21704b; }
 .news-heading h1, .news-detail h1 { font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
 .news-eyebrow { color: #21704b; font-size: .78rem; font-weight: 700; letter-spacing: .12em; margin-bottom: .75rem; }

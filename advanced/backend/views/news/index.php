@@ -1,12 +1,18 @@
 <?php
 
 /** Management list view. Variables: search, dataProvider, categories. Maintainer: B. */
+
 declare(strict_types=1);
 
 use backend\assets\NewsAsset;
 use common\models\News;
 use yii\grid\GridView;
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var common\models\NewsSearch $search */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var array<int, string> $categories */
 
 NewsAsset::register($this);
 $this->title = '新闻公告管理';
@@ -27,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-2 d-flex align-items-end"><?= Html::submitButton('筛选', ['class' => 'btn btn-primary w-100']) ?></div>
     </form>
     <?= Html::errorSummary($search, ['class' => 'alert alert-danger']) ?>
+    <p class="d-md-none text-muted small">表格可左右滑动，查看全部内容与操作。</p>
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,

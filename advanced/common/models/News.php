@@ -1,6 +1,7 @@
 <?php
 
 /** Shared news record and relationships for both Yii applications. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;
@@ -27,6 +28,7 @@ use yii\db\ActiveRecord;
  * @property User $author
  * @property NewsTag[] $tags
  * @property NewsRevision[] $revisions
+ * @property string $statusLabel
  */
 class News extends ActiveRecord
 {

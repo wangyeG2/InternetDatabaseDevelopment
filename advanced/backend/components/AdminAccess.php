@@ -4,6 +4,7 @@
  * Backend-wide management access guard. Maintainer: B.
  * All current and future backend controllers use the same role boundary.
  */
+
 declare(strict_types=1);
 
 namespace backend\components;

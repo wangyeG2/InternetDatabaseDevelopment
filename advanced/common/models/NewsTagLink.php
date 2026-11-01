@@ -1,6 +1,7 @@
 <?php
 
 /** Composite-key relation between news and tags. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;

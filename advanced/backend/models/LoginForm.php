@@ -1,6 +1,7 @@
 <?php
 
 /** Backend administrator login form. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\models;

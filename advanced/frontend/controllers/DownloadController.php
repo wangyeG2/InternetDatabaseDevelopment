@@ -1,6 +1,7 @@
 <?php
 
 /** Coursework download entry and allowlisted file responses. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace frontend\controllers;

@@ -1,0 +1,3 @@
+Note: Using configuration file D:\大三上\Internet_database\final_project\advanced\phpstan.neon.
+
+ [OK] No errors

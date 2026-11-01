@@ -1,6 +1,7 @@
 <?php
 
 /** Regressions for malformed HTTP field types. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\tests\Unit\Models;
@@ -22,8 +23,10 @@ final class RequestFormTest extends Unit
 
     public function testArrayFieldsBecomeValidationErrors(): void
     {
-        foreach ([new LoginForm(), new SignupForm(), new ContactForm(), new PasswordResetRequestForm(),
-            new ResendVerificationEmailForm()] as $form) {
+        foreach (
+            [new LoginForm(), new SignupForm(), new ContactForm(), new PasswordResetRequestForm(),
+            new ResendVerificationEmailForm()] as $form
+        ) {
             $field = $form instanceof ContactForm ? 'name' : ($form instanceof LoginForm || $form instanceof SignupForm ? 'username' : 'email');
             $this->assertTrue($form->load([$form->formName() => [$field => ['invalid']]]));
             $this->assertFalse($form->validate());

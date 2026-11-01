@@ -1,6 +1,7 @@
 <?php
 
 /** News category model and relation contract. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\models;
@@ -9,7 +10,16 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
-/** @property int $id @property string $name @property string $slug @property int $is_active */
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string $description
+ * @property int $sort_order
+ * @property int $is_active
+ * @property int $created_at
+ * @property int $updated_at
+ */
 class NewsCategory extends ActiveRecord
 {
     public static function tableName(): string

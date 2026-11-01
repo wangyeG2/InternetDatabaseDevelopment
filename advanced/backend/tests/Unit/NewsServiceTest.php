@@ -1,6 +1,7 @@
 <?php
 
 /** News lifecycle, access control and author ownership tests. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\tests\Unit;
@@ -13,6 +14,9 @@ use common\models\News;
 use common\models\NewsRevision;
 use common\models\User;
 use DomainException;
+use RuntimeException;
+use yii\base\Event;
+use yii\db\ActiveRecord;
 
 final class NewsServiceTest extends Unit
 {
@@ -78,5 +82,43 @@ final class NewsServiceTest extends Unit
     {
         $this->expectException(DomainException::class);
         (new NewsService())->save($this->validForm(), User::findOne(2));
+    }
+
+    public function testAuditFailureRollsBackNewsAndTags(): void
+    {
+        $news = News::findOne(1);
+        $originalTitle = $news->title;
+        $originalTags = $news->getTagNames();
+        $form = NewsForm::forRecord($news);
+        $form->title = '应当整体回滚的修改';
+        $form->tags = 'rollback-only-tag';
+        $failAudit = static function (): void {
+            throw new RuntimeException('Simulated audit write failure');
+        };
+        Event::on(NewsRevision::class, ActiveRecord::EVENT_BEFORE_INSERT, $failAudit);
+        try {
+            (new NewsService())->save($form, User::findOne(1));
+            $this->fail('Expected audit failure.');
+        } catch (RuntimeException $exception) {
+            $this->assertSame('Simulated audit write failure', $exception->getMessage());
+        } finally {
+            Event::off(NewsRevision::class, ActiveRecord::EVENT_BEFORE_INSERT, $failAudit);
+        }
+        $restored = News::findOne(1);
+        $this->assertSame($originalTitle, $restored->title);
+        $this->assertSame($originalTags, $restored->getTagNames());
+        $this->assertFalse(\common\models\NewsTag::find()->where(['name' => 'rollback-only-tag'])->exists());
+        $this->assertSame(0, (int) NewsRevision::find()->where(['news_id' => 1])->count());
+    }
+
+    public function testMaximumMultibyteContentAndAuditSnapshotAreStored(): void
+    {
+        $form = $this->validForm();
+        $form->content = str_repeat('中⚽', 25000);
+        $news = (new NewsService())->save($form, User::findOne(1));
+        $this->assertNotNull($news);
+        $this->assertSame($form->content, News::findOne($news->id)->content);
+        $revision = NewsRevision::find()->where(['news_id' => $news->id])->one();
+        $this->assertSame($form->content, \yii\helpers\Json::decode($revision->snapshot)['content']);
     }
 }

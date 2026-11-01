@@ -1,6 +1,7 @@
 <?php
 
 /** Category list, creation and editing; used only by administrators. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace backend\controllers;

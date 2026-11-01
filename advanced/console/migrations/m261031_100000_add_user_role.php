@@ -1,6 +1,7 @@
 <?php
 
 /** Add explicit management roles without promoting existing users. Maintainer: B. */
+
 declare(strict_types=1);
 
 use yii\db\Migration;

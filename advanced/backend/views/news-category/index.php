@@ -1,11 +1,15 @@
 <?php
 
 /** Category management list. Variable: dataProvider. Maintainer: B. */
+
 declare(strict_types=1);
 
 use backend\assets\NewsAsset;
 use yii\grid\GridView;
 use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var yii\data\ActiveDataProvider $dataProvider */
 
 NewsAsset::register($this);
 $this->title = '新闻分类管理';

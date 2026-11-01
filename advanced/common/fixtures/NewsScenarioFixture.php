@@ -1,6 +1,7 @@
 <?php
 
 /** Isolated integration data for the B news flow; never load in development. Maintainer: B. */
+
 declare(strict_types=1);
 
 namespace common\fixtures;
