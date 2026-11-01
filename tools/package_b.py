@@ -28,6 +28,12 @@ def main() -> None:
         selected.append(path)
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        # Keep initialization and coursework directories without generated or nested files.
+        for relative in ("advanced/backend/runtime/", "advanced/backend/web/assets/", "advanced/console/runtime/",
+                         "advanced/frontend/runtime/", "advanced/frontend/web/assets/", "data/team/", "data/personal/"):
+            info = zipfile.ZipInfo(relative, date_time=(2026, 10, 31, 0, 0, 0))
+            info.external_attr = (0o40755 << 16) | 0x10
+            archive.writestr(info, b"")
         for relative in selected:
             info = zipfile.ZipInfo(relative, date_time=(2026, 10, 31, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED

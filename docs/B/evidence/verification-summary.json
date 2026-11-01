@@ -30,5 +30,6 @@
   },
   "composerStrictValidation": "passed",
   "smtpScope": "file transport / test mailer only",
-  "wholeTeamAcceptance": false
+  "wholeTeamAcceptance": false,
+  "sourcePackageFreshDirectorySmoke": "passed with existing vendor reused"
 }
