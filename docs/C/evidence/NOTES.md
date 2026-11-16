@@ -1,0 +1,29 @@
+# C 模块验证记录
+
+验证时间：2026-11-16 21:44–21:47（Asia/Shanghai，UTC+8）。环境为本机隔离工作目录，不是课程最终部署环境。
+
+本机 apt 无法访问 Debian 软件源（代理返回 500），改用静态 PHP 8.4.23 CLI（static-php-cli，已含 pdo_mysql、mbstring、openssl、fileinfo 等；**未包含 intl**）和 MariaDB 11.4.8 二进制包。数据库仅监听 127.0.0.1:33079，开发库 `internet_team_c_dev`，测试库 `internet_team_c_test`。这些运行时工具与本地连接不纳入仓库或交付包。
+
+## 已执行并通过
+
+- 全部新增/修改 PHP 文件语法检查（`php -l`）通过。
+- 开发库与测试库均成功应用全部 6 项迁移（含 C 的 `m261116_100000_create_team_tables`）。
+- `php yii team/seed` 写入带“示例”标记的展示数据，未创建账号。
+- Codeception `--env php-builtin`：**81 tests, 303 assertions，全部通过**（含原有 B 用例及 C 新增前后台功能/单元测试）。
+- PHPStan level 5：通过。
+- Yii2 phpcs：通过。
+- `composer validate --strict --no-check-publish`：通过。
+- HTTP 验收（`php -S 127.0.0.1:8080/8081`）：
+  - 访客打开首页、团队介绍、成员页（赵非凡）返回 200；不存在成员 slug 返回 404。
+  - 访客访问后台 `team-member/index` 返回 302 到登录页。
+  - 普通成员后台登录被拒绝，表单提示 `This account does not have backend access.`（与 B 的后台登录边界一致）。已登录普通成员访问管理路由返回 403 由自动测试覆盖。
+  - 管理员可打开并保存团队资料；非法 slug 显示 `.error-summary`；缺少 CSRF 的 POST 返回 400。
+  - 保存后前台团队页出现更新后的示例名称，导航含首页、团队介绍、成员、新闻公告、作业下载。
+
+## 未宣称的事项
+
+- 未执行真实浏览器视觉回归或手机宽度截图（留给后续人工查看）。
+- 未重新导出全组 `data/install.sql`（仍为 B 快照）。
+- 未推送远程、未创建 PR、未合并。
+- D 留言板/动态图形、A 最终部署材料未完成，不能视为全组验收通过。
+- 本地预览账号只存在于本机开发库，未写入仓库或交付包。

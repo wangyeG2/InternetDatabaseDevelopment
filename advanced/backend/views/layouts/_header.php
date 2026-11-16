@@ -11,19 +11,28 @@ use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
 $items = [
+    ['label' => '团队资料', 'url' => ['/team-profile/update'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
+    ['label' => '成员管理', 'url' => ['/team-member/index'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
+    ['label' => '项目时间线', 'url' => ['/team-milestone/index'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
+    ['label' => '相关链接', 'url' => ['/team-link/index'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
+
     ['label' => '新闻管理', 'url' => ['/news/index'],
         'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
     [
-        'label' => 'Home',
+        'label' => '首页',
         'url' => ['/site/index'],
     ],
     [
-        'label' => 'Login',
+        'label' => '登录',
         'url' => ['/site/login'],
         'visible' => Yii::$app->user->isGuest,
     ],
     [
-        'label' => 'Logout (' . Html::encode(Yii::$app->user->identity?->username) . ')',
+        'label' => '退出 (' . Html::encode(Yii::$app->user->identity?->username) . ')',
         'url' => ['/site/logout'],
         'linkOptions' => [
             'data-method' => 'post',
@@ -36,9 +45,9 @@ $items = [
 <header id="header">
     <?php NavBar::begin(
         [
-            'brandLabel' => Yii::$app->name,
+            'brandLabel' => '世界杯 · 课程团队',
             'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+            'options' => ['class' => 'navbar-expand-xl navbar-dark bg-dark fixed-top']
         ],
     ) ?>
     <?= Nav::widget(

@@ -7,9 +7,12 @@
 
     <!-- directories to check -->
     <file>backend/assets</file>
+    <file>backend/services</file>
+    <file>console/controllers</file>
     <file>backend/controllers</file>
     <file>backend/models</file>
     <file>backend/views</file>
+    <file>common/assets</file>
     <file>common/fixtures</file>
     <file>common/mail</file>
     <file>common/models</file>

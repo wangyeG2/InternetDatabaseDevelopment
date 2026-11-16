@@ -1,5 +1,7 @@
 <?php
 
+/** Public site and existing account entry points. Maintainers: C/A. */
+
 declare(strict_types=1);
 
 namespace frontend\controllers;
@@ -90,7 +92,7 @@ class SiteController extends Controller
      */
     public function actionIndex(): string
     {
-        return $this->render('index');
+        return $this->render('index', ['profile' => \common\models\TeamProfile::current()]);
     }
 
     /**
