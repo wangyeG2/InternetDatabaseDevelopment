@@ -2,7 +2,7 @@
 
 验证时间：2026-11-16 21:44–21:47（Asia/Shanghai，UTC+8）。环境为本机隔离工作目录，不是课程最终部署环境。
 
-本机 apt 无法访问 Debian 软件源（代理返回 500），改用静态 PHP 8.4.23 CLI（static-php-cli，已含 pdo_mysql、mbstring、openssl、fileinfo 等；**未包含 intl**）和 MariaDB 11.4.8 二进制包。数据库仅监听 127.0.0.1:33079，开发库 `internet_team_c_dev`，测试库 `internet_team_c_test`。这些运行时工具与本地连接不纳入仓库或交付包。
+本机 apt 无法访问 Debian 软件源（代理返回 500），改用静态 PHP 8.4.23 CLI（static-php-cli，已含 pdo_mysql、mbstring、openssl、fileinfo 等；**未包含 intl**）和 MariaDB 11.4.8 二进制包。数据库仅监听 127.0.0.1:33079，开发库 `internet_team_c_dev`，测试库 `internet_team_c_test`。这些运行时工具与本地连接不纳入仓库或交付包。代码基线为 `origin/feature/b-news`（`6a4e048`），不是尚未合入 B 的 `main`；详见接入说明。
 
 ## 已执行并通过
 

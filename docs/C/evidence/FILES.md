@@ -44,6 +44,7 @@
 - `advanced/frontend/tests/Functional/HomeCest.php`
 - `advanced/frontend/tests/Functional/LoginCest.php`
 - `advanced/frontend/tests/Functional/TeamCest.php`
+- `advanced/frontend/tests/Functional/VerifyEmailCest.php`
 - `advanced/frontend/views/layouts/_footer.php`
 - `advanced/frontend/views/layouts/_header.php`
 - `advanced/frontend/views/site/index.php`
