@@ -39,3 +39,11 @@
 ## 2026-11-17 基线更新（Asia/Shanghai）
 
 2026-11-17（Asia/Shanghai），最新 `origin/main` 为 `e1fd0496acb75787fd66a473ce00a9dcda50284d`（PR #2 合入 B），B tip `6a4e0489b6cd74b1084f5357f21a19ff076f9627` 已是其祖先，二者树相同，无额外文件变化。本地 `integration/c-main-20261117` 已通过 `5a0228bdc2f151b1d90ea29831ccf5734ba397de` 零冲突合入 C，结果树与 C tip 相同，尚未推送。 `data/install.sql` 保留 B 快照。本次仅进行接口静态审查和文档更新，提交后的测试由 supervisor 执行；上面的测试数字是历史记录，视觉验收未通过的记录仍然有效。
+
+## 2026-11-17 本地合入最新 main 后的回归（Asia/Shanghai，UTC+8）
+
+2026-11-17 18:58–18:59，在本地分支 `integration/c-main-20261117`（文档提交 `332aff2` 之后）对同一隔离环境再次执行并全部通过：`php -l`（相对最新 `origin/main` 的 PHP 变更）、开发库与测试库 `migrate`（均已是最新，无待执行迁移）、`composer validate --strict --no-check-publish`、Codeception `--env php-builtin` **81 tests, 303 assertions**、PHPStan level 5、Yii2 phpcs 105 文件。完整输出见仓库外 `/workspace/course-merge-review/test-run.log`。
+
+同日 18:59 对本机已有开发服务做了 `curl` HTTP 检查（不是浏览器视觉验收）：前台首页、团队介绍、新闻公告、作业下载返回 200；成员页 `example-member-a/b/c/d`（王烨、阎科霖、赵非凡、秦东杰）返回 200；不存在成员 slug 返回 404；访客访问后台 `team-member/index` 与 `news/index` 返回 302。记录见 `/workspace/course-merge-review/http-check.log`。
+
+浏览器视觉验收仍未完成、未通过（先前 localhost 连接拒绝，其后访问 `172.30.0.2` 收到环境网络限制的 HTTP 403）。本次未再尝试用浏览器绕过该限制，不能把上述 200 写成页面已视觉验收。
