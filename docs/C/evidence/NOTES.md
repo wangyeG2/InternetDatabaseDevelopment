@@ -2,7 +2,7 @@
 
 验证时间：2026-11-16 21:44–21:47（Asia/Shanghai，UTC+8）。环境为本机隔离工作目录，不是课程最终部署环境。
 
-本机 apt 无法访问 Debian 软件源（代理返回 500），改用静态 PHP 8.4.23 CLI（static-php-cli，已含 pdo_mysql、mbstring、openssl、fileinfo 等；**未包含 intl**）和 MariaDB 11.4.8 二进制包。数据库仅监听 127.0.0.1:33079，开发库 `internet_team_c_dev`，测试库 `internet_team_c_test`。这些运行时工具与本地连接不纳入仓库或交付包。代码基线为 `origin/feature/b-news`（`6a4e048`），不是尚未合入 B 的 `main`；详见接入说明。
+本机 apt 无法访问 Debian 软件源（代理返回 500），改用静态 PHP 8.4.23 CLI（static-php-cli，已含 pdo_mysql、mbstring、openssl、fileinfo 等；**未包含 intl**）和 MariaDB 11.4.8 二进制包。数据库仅监听 127.0.0.1:33079，开发库 `internet_team_c_dev`，测试库 `internet_team_c_test`。这些运行时工具与本地连接不纳入仓库或交付包。代码基线为 `origin/feature/b-news`（`6a4e048`），不是当时尚未合入 B 的旧 `main`（`642f359`）；详见接入说明。
 
 ## 已执行并通过（自动功能/安全检查，不是视觉验收）
 
@@ -28,10 +28,14 @@
 1. 第一次：开发服务只监听 `127.0.0.1`，外部浏览器访问 8080/8081 连接被拒绝。
 2. 第二次：服务改绑到 `0.0.0.0` 后，浏览器访问 `172.30.0.2:8080/8081` 收到 HTTP 403（环境网络限制），未能打开页面做视觉检查。
 
-因此：自动功能与安全检查已通过，但视觉验收未完成。没有浏览器视觉回归截图，也没有手机宽度截图。分支将在这一状态下推送到远程 `feature/c-team` 供审阅，不合并 `main`、不创建 PR。
+因此：自动功能与安全检查已通过，但视觉验收未完成。没有浏览器视觉回归截图，也没有手机宽度截图。该历史交付在这一状态下推送到远程 `feature/c-team` 供审阅，当时未合并 `main`、未创建 PR。
 
 ## 其他未宣称的事项
 
 - 未重新导出全组 `data/install.sql`（仍为 B 快照）。
 - D 留言板/动态图形、A 最终部署材料未完成，不能视为全组验收通过。
 - 本地预览账号只存在于本机开发库，未写入仓库或交付包。
+
+## 2026-11-17 基线更新（Asia/Shanghai）
+
+2026-11-17（Asia/Shanghai），最新 `origin/main` 为 `e1fd0496acb75787fd66a473ce00a9dcda50284d`（PR #2 合入 B），B tip `6a4e0489b6cd74b1084f5357f21a19ff076f9627` 已是其祖先，二者树相同，无额外文件变化。本地 `integration/c-main-20261117` 已通过 `5a0228bdc2f151b1d90ea29831ccf5734ba397de` 零冲突合入 C，结果树与 C tip 相同，尚未推送。 `data/install.sql` 保留 B 快照。本次仅进行接口静态审查和文档更新，提交后的测试由 supervisor 执行；上面的测试数字是历史记录，视觉验收未通过的记录仍然有效。
