@@ -1,5 +1,7 @@
 <?php
 
+/** Login and shared navigation regression. Maintainers: C/A. */
+
 declare(strict_types=1);
 
 namespace frontend\tests\Functional;
@@ -54,8 +56,8 @@ final class LoginCest
     public function checkValidLogin(FunctionalTester $I): void
     {
         $I->submitForm('#login-form', $this->formParams('erau', 'password_0'));
-        $I->seeLink('Logout (erau)');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+        $I->seeLink('退出 (erau)');
+        $I->dontSeeLink('登录');
+        $I->dontSeeLink('注册');
     }
 }

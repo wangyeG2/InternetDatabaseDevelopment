@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-01",
+  "restore": {
+    "database": "internet_team_b_restore_final_20261101",
+    "counts": {
+      "user": 0,
+      "news_category": 3,
+      "news": 0,
+      "news_tag": 0,
+      "news_tag_link": 0,
+      "news_revision": 0,
+      "migration": 6
+    }
+  },
+  "postRestoreMigrate": "No new migrations found",
+  "longTextColumns": [
+    "news\tcontent\tmediumtext",
+    "news_revision\tsnapshot\tmediumtext"
+  ],
+  "bytes": 8428
+}

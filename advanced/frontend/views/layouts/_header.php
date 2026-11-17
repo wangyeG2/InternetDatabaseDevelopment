@@ -1,5 +1,7 @@
 <?php
 
+/** Shared frontend navigation with news and coursework links. Maintainers: C/B. */
+
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
@@ -9,30 +11,25 @@ use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
 $items = [
+    ['label' => '首页', 'url' => ['/site/index']],
+    ['label' => '团队介绍', 'url' => ['/team/index']],
+    ['label' => '成员', 'url' => ['/team/index', '#' => 'roster']],
+    ['label' => '新闻公告', 'url' => ['/news/index']],
+    ['label' => '作业下载', 'url' => ['/download/index']],
+    ['label' => '关于本站', 'url' => ['/site/about']],
+    ['label' => '联系', 'url' => ['/site/contact']],
     [
-        'label' => 'Home',
-        'url' => ['/site/index'],
-    ],
-    [
-        'label' => 'About',
-        'url' => ['/site/about'],
-    ],
-    [
-        'label' => 'Contact',
-        'url' => ['/site/contact'],
-    ],
-    [
-        'label' => 'Signup',
+        'label' => '注册',
         'url' => ['/site/signup'],
         'visible' => Yii::$app->user->isGuest,
     ],
     [
-        'label' => 'Login',
+        'label' => '登录',
         'url' => ['/site/login'],
         'visible' => Yii::$app->user->isGuest,
     ],
     [
-        'label' => 'Logout (' . Html::encode(Yii::$app->user->identity?->username) . ')',
+        'label' => '退出 (' . Html::encode(Yii::$app->user->identity?->username) . ')',
         'url' => ['/site/logout'],
         'linkOptions' => [
             'data-method' => 'post',
@@ -46,9 +43,9 @@ $items = [
 <header id="header">
     <?php NavBar::begin(
         [
-            'brandLabel' => Yii::$app->name,
+            'brandLabel' => '世界杯 · 课程团队',
             'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+            'options' => ['class' => 'navbar-expand-xl navbar-dark bg-dark fixed-top']
         ],
     ) ?>
     <?= Nav::widget(

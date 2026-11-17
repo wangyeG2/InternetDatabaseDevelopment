@@ -32,7 +32,7 @@ REQUIREMENTS
 ------------
 
 > [!IMPORTANT]
-> - The minimum required [PHP](https://www.php.net/) version of Yii is PHP `8.2`.
+> - This repository requires [PHP](https://www.php.net/) `8.3` or later, including its locked development tools. PHP `8.4` is the verified team baseline.
 
 ## Install via Composer
 

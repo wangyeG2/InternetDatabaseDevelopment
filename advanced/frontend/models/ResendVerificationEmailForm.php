@@ -1,14 +1,16 @@
 <?php
 
+/** Verification-email request with safe scalar input. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace frontend\models;
 
 use common\models\User;
-use yii\base\Model;
+use common\models\RequestForm;
 use yii\mail\MailerInterface;
 
-class ResendVerificationEmailForm extends Model
+class ResendVerificationEmailForm extends RequestForm
 {
     public string $email = '';
     /**

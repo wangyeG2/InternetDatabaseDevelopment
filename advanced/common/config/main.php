@@ -1,8 +1,11 @@
 <?php
 
+/** Shared application identity and components. Maintainers: C/B. */
+
 declare(strict_types=1);
 
 return [
+    'name' => '2026世界杯主题团队主页',
     'bootstrap' => [
         \common\bootstrap\MailerBootstrap::class,
     ],

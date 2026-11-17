@@ -3,12 +3,15 @@ parameters:
 
     paths:
         - backend/assets
+        - backend/components
         - backend/controllers
         - backend/models
+        - backend/services
         - backend/views
         - backend/tests/Functional
         - backend/tests/Unit
         - common/mail
+        - common/fixtures
         - common/models
         - common/widgets
         - common/tests/Unit

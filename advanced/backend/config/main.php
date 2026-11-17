@@ -1,5 +1,7 @@
 <?php
 
+/** Backend application configuration, including the shared admin guard. Maintainer: A/B. */
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -13,6 +15,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'as adminAccess' => \backend\components\AdminAccess::class,
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

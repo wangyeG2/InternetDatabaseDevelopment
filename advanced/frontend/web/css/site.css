@@ -61,7 +61,7 @@ a.desc:after {
     color: var(--bs-navbar-color);
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 1199.98px) {
     .navbar-nav .nav-link.logout {
         display: block;
         text-align: left;

@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-01",
+  "browser": "156.0.8078.48",
+  "desktop": [
+    1440,
+    1000
+  ],
+  "mobile": [
+    390,
+    844
+  ],
+  "checks": [
+    "public list and detail",
+    "draft hidden",
+    "admin login",
+    "UI create",
+    "GET mutation rejected 405",
+    "POST without CSRF rejected 400",
+    "UI publish 200",
+    "stored HTML escaped",
+    "UI withdraw 404",
+    "UI republish 200",
+    "UI soft delete 404",
+    "member backend login denied",
+    "public and admin mobile overflow checks"
+  ],
+  "pageErrors": [],
+  "screenshots": [
+    "01-news-list-desktop.png",
+    "02-news-detail-desktop.png",
+    "03-news-list-mobile.png",
+    "04-news-detail-mobile.png",
+    "05-news-admin-list.png",
+    "06-news-editor.png",
+    "07-news-history.png",
+    "08-news-editor-mobile.png",
+    "09-news-admin-mobile.png"
+  ],
+  "finalScreensRefreshed": true
+}
