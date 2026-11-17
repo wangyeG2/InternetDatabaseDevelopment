@@ -1,5 +1,7 @@
 <?php
 
+/** Login and shared navigation regression. Maintainers: C/A. */
+
 declare(strict_types=1);
 
 namespace backend\tests\Functional;
@@ -26,8 +28,8 @@ final class LoginCest
         $I->fillField('Your Password', 'password_0');
         $I->click('login-button');
 
-        $I->seeLink('Logout (erau)');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+        $I->seeLink('退出 (erau)');
+        $I->dontSeeLink('登录');
+        $I->dontSeeLink('注册');
     }
 }

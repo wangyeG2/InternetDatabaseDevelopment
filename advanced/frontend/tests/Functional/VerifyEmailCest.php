@@ -1,5 +1,7 @@
 <?php
 
+/** Homepage copy after successful email verification. Maintainer: C. */
+
 declare(strict_types=1);
 
 namespace frontend\tests\Functional;
@@ -52,7 +54,7 @@ final class VerifyEmailCest
     {
         $I->amOnRoute('site/verify-email', ['token' => '4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330']);
         $I->canSee('Your email has been confirmed!');
-        $I->canSee('Build with Yii Framework', 'h1');
+        $I->canSee('2026世界杯主题团队主页', 'h1');
         $I->dontSeeLink('Logout (test.test)');
         $I->seeRecord(
             User::class,
