@@ -1,16 +1,18 @@
 <?php
 
+/** Contact form with safe scalar request fields. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace frontend\models;
 
-use yii\base\Model;
+use common\models\RequestForm;
 use yii\mail\MailerInterface;
 
 /**
  * ContactForm is the model behind the contact form.
  */
-class ContactForm extends Model
+class ContactForm extends RequestForm
 {
     public string $name = '';
     public string $email = '';

@@ -1,5 +1,7 @@
 <?php
 
+/** Shared frontend navigation with news and coursework links. Maintainers: C/B. */
+
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
@@ -9,6 +11,8 @@ use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
 $items = [
+    ['label' => '新闻公告', 'url' => ['/news/index']],
+    ['label' => '作业下载', 'url' => ['/download/index']],
     [
         'label' => 'Home',
         'url' => ['/site/index'],

@@ -1,5 +1,7 @@
 <?php
 
+/** Public production connection template; configure credentials locally. Maintainers: A/B. */
+
 return [
     'container' => [
         'singletons' => [
@@ -15,7 +17,7 @@ return [
             'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
             'username' => 'root',
             'password' => '',
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
         ],
         'mailer' => \yii\mail\MailerInterface::class,
     ],

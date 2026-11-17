@@ -1,5 +1,7 @@
 <?php
 
+/** Shared backend navigation with news management entry. Maintainers: C/B. */
+
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
@@ -9,6 +11,8 @@ use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
 $items = [
+    ['label' => '新闻管理', 'url' => ['/news/index'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
     [
         'label' => 'Home',
         'url' => ['/site/index'],

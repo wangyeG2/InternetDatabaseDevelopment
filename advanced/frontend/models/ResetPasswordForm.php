@@ -1,5 +1,7 @@
 <?php
 
+/** Password-reset form with safe scalar input. Maintainers: A/B. */
+
 declare(strict_types=1);
 
 namespace frontend\models;
@@ -7,12 +9,12 @@ namespace frontend\models;
 use common\models\User;
 use Yii;
 use yii\base\InvalidArgumentException;
-use yii\base\Model;
+use common\models\RequestForm;
 
 /**
  * Password reset form
  */
-class ResetPasswordForm extends Model
+class ResetPasswordForm extends RequestForm
 {
     public string $password = '';
     private User|null $_user = null;
