@@ -15,6 +15,7 @@ $items = [
     ['label' => '团队介绍', 'url' => ['/team/index']],
     ['label' => '成员', 'url' => ['/team/index', '#' => 'roster']],
     ['label' => '新闻公告', 'url' => ['/news/index']],
+    ['label' => '留言板', 'url' => ['/message/index']],
     ['label' => '作业下载', 'url' => ['/download/index']],
     ['label' => '关于本站', 'url' => ['/site/about']],
     ['label' => '联系', 'url' => ['/site/contact']],

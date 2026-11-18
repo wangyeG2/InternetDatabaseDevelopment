@@ -22,6 +22,8 @@ $items = [
 
     ['label' => '新闻管理', 'url' => ['/news/index'],
         'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
+    ['label' => '留言管理', 'url' => ['/message/index'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
     [
         'label' => '首页',
         'url' => ['/site/index'],
