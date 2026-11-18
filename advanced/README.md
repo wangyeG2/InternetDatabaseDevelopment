@@ -32,7 +32,7 @@ REQUIREMENTS
 ------------
 
 > [!IMPORTANT]
-> - This repository requires [PHP](https://www.php.net/) `8.3` or later, including its locked development tools. PHP `8.4` is the verified team baseline.
+> - This repository requires [PHP](https://www.php.net/) `8.2.12` or later, including its locked development tools.
 
 ## Install via Composer
 
