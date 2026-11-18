@@ -12,9 +12,13 @@ use yii\helpers\Html;
 
 $items = [
     ['label' => '首页', 'url' => ['/site/index']],
-    ['label' => '团队介绍', 'url' => ['/team/index']],
-    ['label' => '成员', 'url' => ['/team/index', '#' => 'roster']],
+    ['label' => '编辑部', 'url' => ['/team/index']],
+    ['label' => '赛程', 'active' => false, 'url' => ['/site/index', '#' => 'schedule']],
+    ['label' => '战报', 'active' => false, 'url' => ['/site/index', '#' => 'results']],
+    ['label' => '成员', 'active' => false, 'url' => ['/team/index', '#' => 'roster']],
     ['label' => '新闻公告', 'url' => ['/news/index']],
+    ['label' => '读者看台', 'url' => ['/message/index']],
+    ['label' => '数据版', 'url' => ['/data/index']],
     ['label' => '作业下载', 'url' => ['/download/index']],
     ['label' => '关于本站', 'url' => ['/site/about']],
     ['label' => '联系', 'url' => ['/site/contact']],
@@ -41,11 +45,20 @@ $items = [
 
 ?>
 <header id="header">
+    <div class="container wc-mast">
+        <div class="wc-edition">THE TOUCHLINE <i></i> 世界杯特刊</div>
+        <?php if (Yii::$app->controller->route === 'site/index'): ?>
+            <h1 class="wc-banner-title"><?= Html::a('绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?><span class="visually-hidden"> · <?= Html::encode(Yii::$app->name) ?></span></h1>
+        <?php else: ?>
+            <?= Html::a('绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?>
+        <?php endif ?>
+        <div class="wc-dateline"><b>2026 美加墨世界杯特别报道</b><span data-wc-clock>6 月 11 日 — 7 月 19 日</span></div>
+    </div>
     <?php NavBar::begin(
         [
-            'brandLabel' => '世界杯 · 课程团队',
+            'brandLabel' => false,
             'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-xl navbar-dark bg-dark fixed-top']
+            'options' => ['class' => 'navbar-expand-xl navbar-dark wc-nav']
         ],
     ) ?>
     <?= Nav::widget(

@@ -31,5 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('#' . Html::encode($tag->name), ['index', 'tag' => $tag->id]) ?>
         <?php endforeach; ?>
     </div>
+    <p><?= Html::a('阅读同栏目报道', ['index', 'category' => $news->category_id]) ?></p>
     <p class="mt-4"><?= Html::a('返回新闻列表', ['index'], ['class' => 'btn btn-outline-secondary']) ?></p>
 </article>

@@ -1,12 +1,14 @@
 <?php
 
+/** 前台资源与元数据。维护：秦东杰。 */
+
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
 
-use frontend\assets\AppAsset;
+use frontend\assets\WorldCupAsset;
 
-AppAsset::register($this);
+WorldCupAsset::register($this);
 
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(

@@ -233,3 +233,26 @@ INSERT INTO `migration` VALUES ('m000000_000000_base',1793516545),('m130524_2014
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- D: moderated reader messages, plus five explicitly unattributed editorial samples.
+CREATE TABLE `message` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `author_id` int DEFAULT NULL,
+  `topic` varchar(24) NOT NULL,
+  `body` text NOT NULL,
+  `status` smallint NOT NULL DEFAULT 0,
+  `created_at` int NOT NULL,
+  `moderated_by` int DEFAULT NULL,
+  `moderated_at` int DEFAULT NULL,
+  KEY `ix_message_status_id` (`status`,`id`),
+  KEY `ix_message_status_topic` (`status`,`topic`),
+  CONSTRAINT `fk_message_author` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `fk_message_moderator` FOREIGN KEY (`moderated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `message` (topic,body,status,created_at) VALUES
+('matches','从揭幕战开始记录这届世界杯。',1,1781193600),
+('matches','期待更多球队的赛后复盘。',1,1781280000),
+('feedback','希望看到更多场馆的故事。',1,1781366400),
+('team','编辑部的赛程速览很方便。',1,1781452800),
+('team','想和大家交换观赛笔记。',1,1781539200);
+INSERT INTO `migration` VALUES ('m261118_100000_create_message_table', 1795046400),('m261119_100000_refresh_message_board', 1795046400);
