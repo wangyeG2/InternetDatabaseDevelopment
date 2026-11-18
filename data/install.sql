@@ -1,7 +1,7 @@
--- B news module installation snapshot, 2026-11-01.
--- Import into an EMPTY MySQL database. Includes 6 business tables and migration history.
--- Contains default categories only; no accounts, passwords, sample news, or local credentials.
--- For an existing installation, use Yii migrations instead. A must merge other team modules.
+-- Team installation snapshot, 2026-11-18.
+-- Import into an EMPTY MySQL database. Includes 11 business tables and migration history.
+-- Contains default news categories only; no accounts, passwords, sample news, or local credentials.
+-- For an existing installation, use Yii migrations instead.
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -120,6 +120,84 @@ CREATE TABLE `user` (
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `team_profile` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `slug` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `motto` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `summary` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `theme_note` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `is_current` tinyint(1) DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_team_profile_slug` (`slug`),
+  UNIQUE KEY `ux_team_profile_current` (`is_current`),
+  KEY `ix_team_profile_updated_by` (`updated_by`),
+  CONSTRAINT `ck_team_profile_current` CHECK (`is_current` IS NULL OR `is_current` = 1),
+  CONSTRAINT `fk_team_profile_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `team_member` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `slug` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `module_code` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `role_title` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `duty` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bio` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `sort_order` smallint NOT NULL DEFAULT '0',
+  `is_public` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_team_member_slug` (`slug`),
+  KEY `ix_team_member_order` (`is_public`,`sort_order`),
+  KEY `ix_team_member_user_id` (`user_id`),
+  CONSTRAINT `fk_team_member_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `team_member_duty` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `detail` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `member_id` int NOT NULL,
+  `sort_order` smallint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `ix_team_member_duty_order` (`member_id`,`sort_order`),
+  KEY `ix_team_member_duty_member_id` (`member_id`),
+  CONSTRAINT `fk_team_member_duty_member_id` FOREIGN KEY (`member_id`) REFERENCES `team_member` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `team_milestone` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `happened_on` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `summary` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `is_example` tinyint(1) NOT NULL DEFAULT '0',
+  `sort_order` smallint NOT NULL DEFAULT '0',
+  `is_public` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_team_milestone_order` (`is_public`,`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `team_link` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `label` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `url` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sort_order` smallint NOT NULL DEFAULT '0',
+  `is_public` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_team_link_order` (`is_public`,`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -145,7 +223,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `news_category` VALUES (1,'赛事资讯','tournament','赛事主题与学习资料。',10,1,1793516546,1793516546),(2,'团队公告','team','团队安排与项目进展。',20,1,1793516546,1793516546),(3,'观赛指南','guides','观赛活动与规则介绍。',30,1,1793516546,1793516546);
 
-INSERT INTO `migration` VALUES ('m000000_000000_base',1793516545),('m130524_201442_init',1793516545),('m190124_110200_add_verification_token_column_to_user_table',1793516545),('m261031_100000_add_user_role',1793516545),('m261031_101000_create_news_tables',1793516546),('m261101_100000_expand_news_text_capacity',1793517298);
+INSERT INTO `migration` VALUES ('m000000_000000_base',1793516545),('m130524_201442_init',1793516545),('m190124_110200_add_verification_token_column_to_user_table',1793516545),('m261031_100000_add_user_role',1793516545),('m261031_101000_create_news_tables',1793516546),('m261101_100000_expand_news_text_capacity',1793517298),('m261116_100000_create_team_tables',NULL);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

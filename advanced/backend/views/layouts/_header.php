@@ -20,6 +20,8 @@ $items = [
     ['label' => '相关链接', 'url' => ['/team-link/index'],
         'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
 
+    ['label' => '用户管理', 'url' => ['/user/index'],
+        'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
     ['label' => '新闻管理', 'url' => ['/news/index'],
         'visible' => Yii::$app->user->identity instanceof \common\models\User && Yii::$app->user->identity->isAdmin()],
     [
