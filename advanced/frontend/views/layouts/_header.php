@@ -1,78 +1,45 @@
 <?php
 
-/** Shared frontend navigation with news and coursework links. Maintainers: C/B. */
+/** Shared public navigation and course links. Maintainer: 秦东杰. */
 
 declare(strict_types=1);
 
-/** @var yii\web\View $this */
-
+use yii\bootstrap5\BootstrapPluginAsset;
 use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
+BootstrapPluginAsset::register($this);
 $items = [
     ['label' => '首页', 'url' => ['/site/index']],
-    ['label' => '编辑部', 'url' => ['/team/index']],
-    ['label' => '赛程', 'active' => false, 'url' => ['/site/index', '#' => 'schedule']],
-    ['label' => '战报', 'active' => false, 'url' => ['/site/index', '#' => 'results']],
-    ['label' => '成员', 'active' => false, 'url' => ['/team/index', '#' => 'roster']],
+    ['label' => '赛程赛果', 'options' => ['class' => 'd-none d-xl-block'], 'url' => ['/data/matches'], 'active' => in_array(Yii::$app->controller->route, ['data/matches', 'data/match'], true)],
     ['label' => '新闻公告', 'url' => ['/news/index']],
     ['label' => '读者看台', 'url' => ['/message/index']],
     ['label' => '数据版', 'url' => ['/data/index']],
-    ['label' => '作业下载', 'url' => ['/download/index']],
+    ['label' => '编辑部与作业', 'items' => [
+        ['label' => '编辑部', 'url' => ['/team/index']],
+        ['label' => '成员', 'url' => ['/team/index', '#' => 'roster']],
+        ['label' => '作业下载', 'url' => ['/download/index']],
+    ]],
+    ['label' => '注册', 'url' => ['/site/signup'], 'visible' => Yii::$app->user->isGuest],
+    ['label' => '登录', 'url' => ['/site/login'], 'visible' => Yii::$app->user->isGuest],
     [
-        'label' => '注册',
-        'url' => ['/site/signup'],
-        'visible' => Yii::$app->user->isGuest,
-    ],
-    [
-        'label' => '登录',
-        'url' => ['/site/login'],
-        'visible' => Yii::$app->user->isGuest,
-    ],
-    [
-        'label' => '退出 (' . Html::encode(Yii::$app->user->identity?->username) . ')',
+        'label' => '退出 (' . Yii::$app->user->identity?->username . ')',
         'url' => ['/site/logout'],
-        'linkOptions' => [
-            'data-method' => 'post',
-            'class' => 'logout',
-        ],
+        'linkOptions' => ['data-method' => 'post', 'class' => 'logout'],
         'visible' => !Yii::$app->user->isGuest,
     ],
 ];
-
 ?>
 <header id="header">
-    <div class="container wc-mast">
-        <span class="wc-mast-sport" aria-hidden="true"><i></i><i></i><i></i></span>
-        <?php if (Yii::$app->controller->route === 'site/index'): ?>
-            <h1 class="wc-banner-title"><?= Html::a('绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?><span class="visually-hidden"> · <?= Html::encode(Yii::$app->name) ?></span></h1>
-        <?php else: ?>
-            <?= Html::a('绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?>
-        <?php endif ?>
-        <div class="wc-dateline"><b>2026 世界杯特别报道</b><span>加拿大 · 墨西哥 · 美国</span></div>
-    </div>
-    <?php NavBar::begin(
-        [
-            'brandLabel' => false,
-            'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-xl navbar-dark wc-nav']
-        ],
-    ) ?>
-    <?= Nav::widget(
-        [
-            'options' => ['class' => 'navbar-nav me-auto'],
-            'encodeLabels' => false,
-            'items' => $items,
-        ],
-    ) ?>
-    <?= Html::button(
-        '&#127769;',
-        [
-            'id' => 'theme-toggle',
-            'class' => 'btn btn-link nav-link fs-5',
-            'aria-label' => 'Switch to dark mode',
-        ],
-    ) ?>
-    <?php NavBar::end() ?>
+    <nav class="navbar navbar-expand-xl navbar-dark wc-nav" aria-label="主导航">
+        <div class="container">
+            <?= Html::a('<i aria-hidden="true"></i>绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?>
+            <?= Html::a('赛程赛果', ['/data/matches'], ['class' => 'wc-nav-shortcut d-xl-none']) ?>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wc-menu" aria-controls="wc-menu" aria-expanded="false" aria-label="展开或收起主导航"><span class="navbar-toggler-icon"></span></button>
+            <div id="wc-menu" class="collapse navbar-collapse">
+                <?= Nav::widget(['options' => ['class' => 'navbar-nav ms-auto'], 'items' => $items]) ?>
+                <?= Html::button('&#127769;', ['id' => 'theme-toggle', 'class' => 'btn btn-link nav-link', 'aria-label' => '切换配色']) ?>
+            </div>
+        </div>
+    </nav>
 </header>

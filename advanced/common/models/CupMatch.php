@@ -22,10 +22,13 @@ final class CupMatch
     {
         $scores = json_decode($match['scores'], true, 512, JSON_THROW_ON_ERROR);
         $decisive = $scores['p'] ?? $scores['et'] ?? $scores['ft'];
+        [$homeGoals, $awayGoals] = $scores['et'] ?? $scores['ft'];
         return [
+            'home' => $homeGoals,
+            'away' => $awayGoals,
             'winner' => $decisive[0] === $decisive[1] ? null : ($decisive[0] > $decisive[1] ? $match['home'] : $match['away']),
             'decider' => isset($scores['p']) ? '点球' : (isset($scores['et']) ? '加时' : ''),
-            'line' => implode(' : ', $scores['et'] ?? $scores['ft']),
+            'line' => $homeGoals . ' : ' . $awayGoals,
             'note' => isset($scores['p']) ? '点球 ' . implode(' : ', $scores['p']) : (isset($scores['et']) ? '加时完场' : '全场'),
         ];
     }

@@ -19,8 +19,7 @@ final class TournamentEdition extends Widget
         return $this->view->render('@frontend/views/site/_edition', [
             'news' => $latest,
             'opening' => CupMatch::fixtures()->orderBy(['m.kickoff' => SORT_ASC, 'm.id' => SORT_ASC])->limit(4)->all(),
-            'finals' => CupMatch::fixtures()->orderBy(['m.kickoff' => SORT_DESC, 'm.id' => SORT_DESC])->limit(3)->all(),
-            'quarter' => CupMatch::fixtures()->where(['m.stage' => '四分之一决赛'])->orderBy('m.kickoff')->all(),
+            'finals' => CupMatch::fixtures()->orderBy(['m.kickoff' => SORT_DESC, 'm.id' => SORT_DESC])->limit(4)->all(),
         ]);
     }
 }
