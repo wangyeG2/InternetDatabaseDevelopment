@@ -1,5 +1,7 @@
 <?php
 
+/** 前台公共页面布局。维护：秦东杰。 */
+
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
@@ -18,7 +20,7 @@ $this->render('_head');
     <?php $this->head() ?>
     <title><?= Html::encode($this->title) ?></title>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="wc-theme d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
 <?= $this->render('_header') ?>

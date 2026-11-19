@@ -15,9 +15,10 @@ final class HomeCest
         $I->amOnPage('/');
         $I->see('2026世界杯主题团队主页');
 
-        $I->seeLink('关于本站');
-        $I->click('关于本站');
+        $I->dontSeeLink('关于本站');
+        $I->dontSeeLink('联系');
+        $I->click('完整赛程');
 
-        $I->see('This is the About page.');
+        $I->see('全部赛程与赛果');
     }
 }

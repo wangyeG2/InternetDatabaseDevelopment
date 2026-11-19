@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="py-3">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php foreach ($groups as $group): ?>
-        <h2 class="h4 mt-4"><?= Html::encode($group['label']) ?></h2>
+        <h2 id="<?= Html::encode($group['label']) ?>" class="h4 mt-4"><?= Html::encode($group['label']) ?></h2>
         <?php if ($group['items'] === []): ?>
             <p class="text-muted">作业文件尚未上传。</p>
         <?php else: ?>

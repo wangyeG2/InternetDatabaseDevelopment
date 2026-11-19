@@ -28,7 +28,7 @@ $this->title = '团队介绍';
 <p class="team-empty">团队资料尚未发布。</p>
 <?php endif ?>
 </header>
-<section id="roster"><h2>成员</h2>
+<section id="roster"><h2>编辑部成员</h2>
 <?php if ($members === []):
     ?><p class="team-empty">暂无公开成员资料。</p><?php
 endif ?>
@@ -36,7 +36,9 @@ endif ?>
 <?php foreach ($members as $member): ?>
 <li class="team-row">
 <span class="team-eyebrow"><?= Html::encode($member->module_code) ?></span>
-<div><h3><?= Html::a($member->name, ['member', 'slug' => $member->slug]) ?></h3>
+<?php // TeamMember has no portrait field. Use an initial in place of an unverified photograph. ?>
+<div class="wc-portrait" aria-hidden="true"><?= Html::encode(mb_substr($member->name, 0, 1)) ?></div>
+<div><h3><?= Html::a(Html::encode($member->name), ['member', 'slug' => $member->slug]) ?></h3>
 <p><?= Html::encode($member->role_title) ?></p></div>
 <p><?= Html::encode($member->duty) ?></p>
 </li>
@@ -59,7 +61,7 @@ endif ?>
 <div class="team-links">
 <?php foreach ($links as $link): ?>
     <?php if (preg_match('~^https?://~i', $link->url)): ?>
-        <?= Html::a($link->label, $link->url, ['rel' => 'external noopener noreferrer', 'target' => '_blank']) ?>
+        <?= Html::a(Html::encode($link->label), $link->url, ['rel' => 'external noopener noreferrer', 'target' => '_blank']) ?>
     <?php endif ?>
 <?php endforeach ?>
 </div></section>

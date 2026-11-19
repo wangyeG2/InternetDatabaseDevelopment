@@ -24,6 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1>新闻公告</h1>
         <p>关注赛事主题，记录团队进展。</p>
     </header>
+    <nav class="wc-categories" aria-label="新闻分类">
+        <?= Html::a('全部', ['index', 'q' => $search->q, 'tag' => $search->tag]) ?>
+        <?php foreach ($categories as $id => $label): ?>
+            <?= Html::a(Html::encode($label), ['index', 'category' => $id, 'q' => $search->q, 'tag' => $search->tag],
+                ['aria-current' => (string) $search->category === (string) $id ? 'page' : null]) ?>
+        <?php endforeach ?>
+    </nav>
     <?php $form = ActiveForm::begin(['method' => 'get', 'action' => ['index'], 'options' => ['class' => 'news-filters']]); ?>
     <?= Html::errorSummary($search, ['class' => 'alert alert-danger']) ?>
     <div class="row g-3 align-items-end">

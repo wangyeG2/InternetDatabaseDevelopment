@@ -1,0 +1,41 @@
+/* Styles for the public message board. Maintainer: D (秦东杰). */
+.message-board {
+    --board-pad: clamp(1rem, 3.5vw, 2.25rem);
+    max-width: 1110px;
+    margin: 1rem auto 3rem;
+}
+
+.wc-theme .message-hero { padding:1.5rem 0; border-block:3px double var(--ink); margin-bottom:1.5rem; }
+.wc-theme .message-hero p { color:var(--muted) }
+.wc-theme .message-hero h1 { font-family:"Noto Serif CJK SC",SimSun,serif }
+.wc-theme .message-card { background:var(--paper); border-radius:0; border-color:var(--rule) }
+.wc-theme .message-copy { border-left:3px solid var(--signal); padding-left:1rem; }
+.message-hero h1 { font-size: clamp(2rem, 6vw, 3.625rem); font-weight: 750; }
+.message-hero p { color: #e2f2e9; }
+.message-columns { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: var(--board-pad); }
+.message-list h2, .message-side h2 { font-size: 1.25rem; font-weight: 700; }
+.message-list > h2 { margin-bottom: 1rem; }
+.message-side { display: grid; align-content: start; gap: 1rem; }
+.message-card { border: 1px solid var(--bs-border-color); background: var(--bs-body-bg); border-radius: .8rem; padding: 1.1rem; }
+.message-list .message-card { margin-bottom: .85rem; }
+.message-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .65rem; overflow-wrap: anywhere; }
+.message-meta time, .message-helper, .message-empty { color: var(--bs-secondary-color); font-size: .875rem; }
+.message-topic, .message-total { border-radius: 1rem; padding: .1rem .55rem; background: #daf0df; color: #124630; font-size: .8rem; }
+.message-copy { overflow-wrap: anywhere; white-space: pre-wrap; margin: .6rem 0 0; }
+#message-compose { scroll-margin-top: 6rem; }
+.message-chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .4rem; }
+.message-chart [hidden] { display: none; }
+.message-bars { padding: 0; margin: 0; list-style: none; }
+.message-bars li + li { margin-top: .8rem; }
+.message-bar-label { display: flex; justify-content: space-between; gap: .5rem; }
+.message-track { margin-top: .35rem; height: .5rem; border-radius: 1rem; background: var(--bs-tertiary-bg); overflow: hidden; }
+.message-track span { display: block; width: var(--bar-width); height: 100%; border-radius: inherit; background: #31825c; transition: width .35s ease; }
+
+@media (max-width: 767px) {
+    .message-columns { grid-template-columns: minmax(0, 1fr); }
+    .message-side { grid-row: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .message-track span { transition: none; }
+}
