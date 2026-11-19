@@ -20,8 +20,6 @@ $items = [
     ['label' => '读者看台', 'url' => ['/message/index']],
     ['label' => '数据版', 'url' => ['/data/index']],
     ['label' => '作业下载', 'url' => ['/download/index']],
-    ['label' => '关于本站', 'url' => ['/site/about']],
-    ['label' => '联系', 'url' => ['/site/contact']],
     [
         'label' => '注册',
         'url' => ['/site/signup'],
@@ -46,13 +44,13 @@ $items = [
 ?>
 <header id="header">
     <div class="container wc-mast">
-        <div class="wc-edition">THE TOUCHLINE <i></i> 世界杯特刊</div>
+        <span class="wc-mast-sport" aria-hidden="true"><i></i><i></i><i></i></span>
         <?php if (Yii::$app->controller->route === 'site/index'): ?>
             <h1 class="wc-banner-title"><?= Html::a('绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?><span class="visually-hidden"> · <?= Html::encode(Yii::$app->name) ?></span></h1>
         <?php else: ?>
             <?= Html::a('绿茵前线', ['/site/index'], ['class' => 'wc-name']) ?>
         <?php endif ?>
-        <div class="wc-dateline"><b>2026 美加墨世界杯特别报道</b><span data-wc-clock>6 月 11 日 — 7 月 19 日</span></div>
+        <div class="wc-dateline"><b>2026 世界杯特别报道</b><span>加拿大 · 墨西哥 · 美国</span></div>
     </div>
     <?php NavBar::begin(
         [

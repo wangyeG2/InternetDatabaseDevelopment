@@ -7,6 +7,8 @@ declare(strict_types=1);
 namespace frontend\controllers;
 
 use common\models\News;
+use common\models\CupMatch;
+use yii\web\NotFoundHttpException;
 use common\models\Message;
 use yii\db\Expression;
 use yii\helpers\Json;
@@ -44,6 +46,27 @@ class DataController extends Controller
             'topics' => $topics,
         ];
         return $this->render('index', ['series' => $series, 'chartJson' => Json::htmlEncode($series)]);
+    }
+
+    public function actionMatches(string $stage = '', string $pool = ''): string
+    {
+        $stages = ['小组赛', '32 强', '16 强', '四分之一决赛', '半决赛', '季军赛', '决赛'];
+        $pools = range('A', 'L');
+        if (($stage !== '' && !in_array($stage, $stages, true)) || ($pool !== '' && !in_array($pool, $pools, true))) {
+            throw new NotFoundHttpException('没有这个赛事分组。');
+        }
+        $matches = CupMatch::fixtures()->andFilterWhere(['m.stage' => $stage, 'm.pool' => $pool])
+            ->orderBy(['m.kickoff' => SORT_ASC, 'm.id' => SORT_ASC])->all();
+        return $this->render('matches', compact('matches', 'stage', 'pool', 'stages', 'pools'));
+    }
+
+    public function actionMatch(int $id): string
+    {
+        $match = CupMatch::fixtures()->where(['m.id' => $id])->one();
+        if (!$match) {
+            throw new NotFoundHttpException('没有这场比赛。');
+        }
+        return $this->render('match', ['match' => $match]);
     }
 
     public function actionHeadlines(): Response
