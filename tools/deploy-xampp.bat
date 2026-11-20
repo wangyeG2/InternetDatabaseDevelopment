@@ -50,7 +50,7 @@ if errorlevel 1 (
     echo ERROR: Yii environment initialization failed.
     exit /b 1
 )
-composer install --no-interaction
+call composer install --no-interaction
 if errorlevel 1 (
     popd
     echo ERROR: Composer dependency installation failed.
