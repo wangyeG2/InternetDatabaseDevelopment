@@ -44,7 +44,7 @@ if errorlevel 1 (
 )
 pushd "%PROJECT_DIR%"
 if errorlevel 1 exit /b 1
-"%PHP_EXE%" init --env=Development --overwrite=n
+"%PHP_EXE%" init --env=Development --overwrite=n --delete=n
 if errorlevel 1 (
     popd
     echo ERROR: Yii environment initialization failed.
@@ -59,9 +59,13 @@ if errorlevel 1 (
 popd
 
 echo Creating database "%DB_NAME%" if it does not exist...
-set /p "MYSQL_USER=MySQL username [root]: "
+set /p "MYSQL_USER=MySQL username (must match common/config/main-local.php) [root]: "
 if not defined MYSQL_USER set "MYSQL_USER=root"
-"%MYSQL_EXE%" --protocol=TCP -h 127.0.0.1 -u "%MYSQL_USER%" -p -e "CREATE DATABASE IF NOT EXISTS `%DB_NAME%` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+set "MYSQL_AUTH=-p"
+"%MYSQL_EXE%" --protocol=TCP -h 127.0.0.1 -u "%MYSQL_USER%" -e "SELECT 1" >nul 2>nul
+if not errorlevel 1 set "MYSQL_AUTH="
+if defined MYSQL_AUTH echo MySQL password required; enter the password configured in main-local.php.
+"%MYSQL_EXE%" --protocol=TCP -h 127.0.0.1 -u "%MYSQL_USER%" %MYSQL_AUTH% -e "CREATE DATABASE IF NOT EXISTS `%DB_NAME%` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 if errorlevel 1 (
     echo ERROR: Could not create the database. Check MySQL is running and verify the credentials.
     echo Create "%DB_NAME%" manually, update common/config/main-local.php, then run Yii migrations.
