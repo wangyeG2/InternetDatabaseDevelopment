@@ -12,14 +12,17 @@ namespace PHPUnit\Runner\Filter;
 use function end;
 use function preg_match;
 use function sprintf;
+use function str_replace;
 use function substr;
 use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestSuite;
-use PHPUnit\Runner\Phpt\TestCase as PhptTestCase;
 use RecursiveFilterIterator;
 use RecursiveIterator;
 
 /**
+ * @template-extends RecursiveFilterIterator<int, Test, RecursiveIterator<int, Test>>
+ *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -56,7 +59,7 @@ abstract class NameFilterIterator extends RecursiveFilterIterator
             return true;
         }
 
-        if ($test instanceof PhptTestCase) {
+        if (!$test instanceof TestCase) {
             return false;
         }
 
@@ -97,7 +100,7 @@ abstract class NameFilterIterator extends RecursiveFilterIterator
 
                     $dataSetMinimum = (int) $matches[2];
                     $dataSetMaximum = (int) $matches[3];
-                } elseif ($matches[1] !== '') {
+                } else {
                     $filter = sprintf(
                         '%s.*with data set #%s$',
                         $matches[1],
@@ -115,10 +118,15 @@ abstract class NameFilterIterator extends RecursiveFilterIterator
                 );
             }
 
-            // Do NOT use preg_quote, to keep magic characters.
+            // Escape delimiters in regular expression. Do NOT use preg_quote,
+            // to keep magic characters.
             $filter = sprintf(
-                '{%s}i',
-                $filter,
+                '/%s/i',
+                str_replace(
+                    '/',
+                    '\\/',
+                    $filter,
+                ),
             );
         }
 

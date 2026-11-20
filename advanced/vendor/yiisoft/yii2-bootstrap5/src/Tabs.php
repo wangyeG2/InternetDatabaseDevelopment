@@ -141,8 +141,13 @@ class Tabs extends Widget
      */
     protected $panes = [];
 
-
-    public function init(): void
+    /**
+     * Initializes the widget.
+     * If you override this method, make sure you call the parent implementation first.
+     * @throws InvalidConfigException
+     * @return void
+     */
+    public function init()
     {
         parent::init();
         Html::addCssClass($this->options, [
@@ -210,11 +215,14 @@ class Tabs extends Widget
             $selected = ArrayHelper::getValue($item, 'active', false);
             $disabled = ArrayHelper::getValue($item, 'disabled', false);
             $headerOptions = ArrayHelper::getValue($item, 'headerOptions', $this->headerOptions);
+            ArrayHelper::setValue($items[$n], 'options', $headerOptions);
+            $linkOptions = ArrayHelper::getValue($item, 'linkOptions', $this->linkOptions);
+            ArrayHelper::setValue($items[$n], 'linkOptions', $linkOptions);
+
             if (isset($item['items'])) {
                 $this->prepareItems($items[$n]['items'], '-dd' . $n);
                 continue;
             } else {
-                ArrayHelper::setValue($items[$n], 'options', $headerOptions);
                 if (!isset($item['url'])) {
                     ArrayHelper::setValue($items[$n], 'url', '#' . $options['id']);
                     ArrayHelper::setValue($items[$n], 'linkOptions.data.bs-toggle', 'tab');

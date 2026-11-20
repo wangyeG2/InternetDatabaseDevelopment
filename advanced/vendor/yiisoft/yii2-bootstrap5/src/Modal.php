@@ -118,14 +118,14 @@ class Modal extends Widget
      */
     public $toggleButton = false;
     /**
-     * @var boolean whether to center the modal vertically
+     * @var bool whether to center the modal vertically
      *
      * When true the modal-dialog-centered class will be added to the modal-dialog
      * @since 2.0.9
      */
     public $centerVertical = false;
     /**
-     * @var boolean whether to make the modal body scrollable
+     * @var bool whether to make the modal body scrollable
      *
      * When true the modal-dialog-scrollable class will be added to the modal-dialog
      * @since 2.0.9
@@ -138,11 +138,13 @@ class Modal extends Widget
      */
     public $dialogOptions = [];
 
-
     /**
+     * Initializes the widget.
+     * If you override this method, make sure you call the parent implementation first.
      * @throws InvalidConfigException
+     * @return void
      */
-    public function init(): void
+    public function init()
     {
         parent::init();
 

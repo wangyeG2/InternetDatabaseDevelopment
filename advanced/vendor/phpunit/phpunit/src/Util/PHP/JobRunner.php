@@ -13,10 +13,7 @@ use const PHP_BINARY;
 use const PHP_SAPI;
 use function array_keys;
 use function array_merge;
-use function array_values;
 use function assert;
-use function count;
-use function explode;
 use function fclose;
 use function file_get_contents;
 use function file_put_contents;
@@ -28,9 +25,6 @@ use function is_file;
 use function is_resource;
 use function proc_close;
 use function proc_open;
-use function sprintf;
-use function str_contains;
-use function str_replace;
 use function str_starts_with;
 use function stream_get_contents;
 use function sys_get_temp_dir;
@@ -60,10 +54,9 @@ final readonly class JobRunner
     }
 
     /**
-     * @param non-empty-string  $processResultFile
-     * @param ?non-empty-string $processResultNonce
+     * @param non-empty-string $processResultFile
      */
-    public function runTestJob(Job $job, string $processResultFile, Test $test, ?string $processResultNonce = null): void
+    public function runTestJob(Job $job, string $processResultFile, Test $test): void
     {
         $result = $this->run($job);
 
@@ -81,10 +74,9 @@ final readonly class JobRunner
             $test,
             $processResult,
             $result->stderr(),
-            $processResultNonce,
         );
 
-        EventFacade::emitter()->childProcessFinished($result->stdout(), $result->stderr());
+        EventFacade::emitter()->testRunnerFinishedChildProcess($result->stdout(), $result->stderr());
     }
 
     /**
@@ -174,7 +166,7 @@ final readonly class JobRunner
             // @codeCoverageIgnoreEnd
         }
 
-        Facade::emitter()->childProcessStarted();
+        Facade::emitter()->testRunnerStartedChildProcess();
 
         fwrite($pipes[0], $job->code());
         fclose($pipes[0]);
@@ -261,9 +253,7 @@ final readonly class JobRunner
             }
         }
 
-        $phpSettings = array_merge($phpSettings, $this->cliIniOverrides($phpSettings));
-
-        $command = array_merge($command, $this->settingsToParameters(array_values($phpSettings)));
+        $command = array_merge($command, $this->settingsToParameters($phpSettings));
 
         if (PHP_SAPI === 'phpdbg') {
             $command[] = '-qrr';
@@ -292,39 +282,7 @@ final readonly class JobRunner
     }
 
     /**
-     * Detects INI settings that cannot be set via ini_set() (PHP_INI_SYSTEM
-     * and PHP_INI_PERDIR) and whose current value differs from the value
-     * configured in INI files.
-     *
-     * These settings must be forwarded as -d flags to child processes
-     * because the @ini_set() calls in GlobalState::getIniSettingsAsString()
-     * cannot change them at runtime.
-     *
-     * @param array<array-key, string> $alreadySet
-     *
-     * @return array<string, string>
-     */
-    private function cliIniOverrides(array $alreadySet): array
-    {
-        $overrides = (new Runtime)->getSettingsNotChangeableAtRuntime();
-
-        foreach ($overrides as $key => $value) {
-            foreach ($alreadySet as $existing) {
-                if (str_starts_with($existing, $key . '=')) {
-                    unset($overrides[$key]);
-
-                    break;
-                }
-            }
-        }
-
-        return $overrides;
-    }
-
-    /**
      * @param list<string> $settings
-     *
-     * @throws PhpProcessException
      *
      * @return list<string>
      */
@@ -334,53 +292,9 @@ final readonly class JobRunner
 
         foreach ($settings as $setting) {
             $buffer[] = '-d';
-            $buffer[] = $this->processSettingValue($setting);
+            $buffer[] = $setting;
         }
 
         return $buffer;
-    }
-
-    /**
-     * Rejects "name=value" INI settings whose value contains a line-break
-     * character. A newline cannot legitimately appear in a PHP INI value and
-     * would, if forwarded unchanged, be parsed by the child process as a
-     * directive separator — turning a single setting into an attacker-
-     * controlled sequence of directives.
-     *
-     * Otherwise quotes the value portion only when it contains characters
-     * PHP's INI parser would interpret as metacharacters (`;` starts a
-     * comment, `"` is a string delimiter).
-     *
-     * Quoting is avoided for plain values so that boolean keywords such as
-     * `On` / `Off` keep their special INI semantics; wrapping them in quotes
-     * turns them into the literal strings `"On"` / `"Off"` and breaks
-     * settings like `output_buffering`.
-     *
-     * @throws PhpProcessException
-     */
-    private function processSettingValue(string $setting): string
-    {
-        $parts = explode('=', $setting, 2);
-
-        if (count($parts) !== 2) {
-            return $setting;
-        }
-
-        [$name, $value] = $parts;
-
-        if (str_contains($value, "\n") || str_contains($value, "\r")) {
-            throw new PhpProcessException(
-                sprintf(
-                    'PHP setting "%s" contains a line-break character, which is not permitted',
-                    $name,
-                ),
-            );
-        }
-
-        if (!str_contains($value, ';') && !str_contains($value, '"')) {
-            return $setting;
-        }
-
-        return $name . '="' . str_replace('"', '\\"', $value) . '"';
     }
 }

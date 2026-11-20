@@ -18,6 +18,7 @@ return array(
     'common\\tests\\' => array($baseDir . '/common/tests', $baseDir . '/common/tests/Support'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'backend\\tests\\' => array($baseDir . '/backend/tests', $baseDir . '/backend/tests/Support'),
+    'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Intl\\Normalizer\\' => array($vendorDir . '/symfony/polyfill-intl-normalizer'),
     'Symfony\\Polyfill\\Intl\\Idn\\' => array($vendorDir . '/symfony/polyfill-intl-idn'),
