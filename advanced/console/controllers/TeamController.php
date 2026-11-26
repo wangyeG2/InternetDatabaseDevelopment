@@ -28,18 +28,19 @@ class TeamController extends Controller
                 ]));
             }
             $members = [
-                ['A', '王烨', '账号与部署', '账号模块；部署材料待组长汇总'],
-                ['B', '阎科霖', '新闻公告', '新闻公告与作业下载（已集成）'],
-                ['C', '赵非凡', '团队展示与布局', '团队展示和编辑MVC、共享导航、视图约定、用户手册'],
-                ['D', '秦东杰', '留言与动态图形', '留言板和动态图形（待集成）'],
+                ['2411294', 'A', '王烨', '组长', '用户登录与管理，部署文档起草，设计文档起草，项目终审核查，PPT 编写与主讲'],
+                ['2411795', 'B', '阎科霖', '组员', '新闻公告发布，实现文档起草，流程与模块图设计'],
+                ['2411738', 'C', '秦东杰', '组员', '留言板及留言管理，需求文档起草，前端UI优化'],
+                ['2411020', 'D', '赵非凡', '组员', '团队信息展示与编辑，用户手册起草'],
             ];
-            foreach ($members as $index => [$code, $name, $role, $duty]) {
-                $slug = 'example-member-' . strtolower($code);
-                if (!TeamMember::find()->where(['slug' => $slug])->exists()) {
+            foreach ($members as $index => [$slug, $code, $name, $role, $duty]) {
+                if (!TeamMember::find()->where(['slug' => $slug])
+                    ->orWhere(['module_code' => $code, 'name' => $name])->exists()
+                ) {
                     $this->insert(new TeamMember([
                         'name' => $name, 'slug' => $slug, 'module_code' => $code, 'role_title' => $role,
-                        'duty' => $duty, 'bio' => '示例介绍：请本人补充个人展示内容。',
-                        'sort_order' => $index, 'is_public' => 1,
+                        'duty' => $duty, 'bio' => '煮啵很神秘~',
+                        'sort_order' => $index + 1, 'is_public' => 1,
                     ]));
                 }
             }
