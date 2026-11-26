@@ -54,7 +54,7 @@ class TeamController extends Controller
             }
             $url = 'https://github.com/wangyeG2/InternetDatabaseDevelopment';
             if (!TeamLink::find()->where(['url' => $url])->exists()) {
-                $this->insert(new TeamLink(['label' => '示例：项目源码仓库', 'url' => $url, 'is_public' => 1, 'sort_order' => 0]));
+                $this->insert(new TeamLink(['label' => 'GitHub 项目仓库', 'url' => $url, 'is_public' => 1, 'sort_order' => 1]));
             }
         });
         $this->stdout("示例数据已补充；同一标识的已有资料保持不变。未创建账号。\n");
